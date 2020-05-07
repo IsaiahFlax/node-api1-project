@@ -61,7 +61,14 @@ server.delete('/api/users/:id', (req, res) => {
 server.patch('/api/users/:id', (req, res)=> {
     const { id } = req.params
     const changes = req.body
-
+    if
+        (!changes.name || !changes.bio) {
+            res.status(400).json({
+                errorMessage:
+                  'Please provide name and bio for the user.',
+              })
+        }
+    else {
     let found = users.find(user => user.id === id)
     if (found) {
         Object.assign(found, changes)
@@ -69,6 +76,7 @@ server.patch('/api/users/:id', (req, res)=> {
     } else {
         res.status(404).json({ message: "user not found"})
     }
+}
 })
 
 
